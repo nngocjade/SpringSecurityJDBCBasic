@@ -21,16 +21,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
-				.usersByUsernameQuery("select username,password,enabled from users where username=?")
+				.usersByUsernameQuery("select username, password, enabled from users where username=?")
 				.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
 	}
  
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/", "/home").permitAll()
+				.antMatchers("/", "/home", "/login").permitAll()
 				.anyRequest().authenticated()
-				.and().formLogin().loginPage("/login").permitAll()
+				.and().formLogin().loginPage("/login")
+				.defaultSuccessUrl("/user")
 				.and().logout().permitAll();
 
 		http.exceptionHandling().accessDeniedPage("/403");

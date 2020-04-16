@@ -21,9 +21,8 @@ public class WebController {
    
     @RequestMapping(value="/user")
     public String user(Authentication authentication){
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        System.out.println("User has authorities: " + userDetails.getAuthorities());
-
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        System.out.println("User has authorities: " + userDetails.getAuthorities());
         return "user";
     }
   
